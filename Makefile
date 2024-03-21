@@ -57,6 +57,6 @@ fclean	::	clean
 force :
 
 norm:
-	norminette libft-1.2/ srcs/ | grep Error
+	-norminette libft-1.2/ srcs/ | grep Error
 
 .PHONY: clean re fclean force all norm
