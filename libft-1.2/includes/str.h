@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: androlink <androlink@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 01:29:19 by gcros             #+#    #+#             */
-/*   Updated: 2024/01/05 14:28:40 by androlink        ###   ########.fr       */
+/*   Updated: 2024/04/04 03:06:38 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	ft_strncpy(char *dest, const char *src, size_t n);
 char	*ft_stpcpy(char *dest, const char *src);
 int		ft_strisnumber(const char *s);
 void	ft_strsfree(char **str);
-char	*ft_strsjoin(char **strs, char sep);
+char	*ft_strsjoin(char **strs);
 
 #endif

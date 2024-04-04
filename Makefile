@@ -41,7 +41,7 @@ $(NAME) : $(OFILES) | $(LIB_PATH)
 
 $(BDIR)/%.o : $(SDIR)/%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@ -I $(HDIR)/
+	$(CC) $(CFLAGS) $(DFLAGS) -c $< -o $@ -I $(HDIR)/ $(LIB_INCLUDE)/
 	@echo "	$@"
 
 clean	::
@@ -57,6 +57,7 @@ fclean	::	clean
 force :
 
 norm:
-	-norminette libft-1.2/ srcs/ | grep Error
+	-@norminette libft-1.2/ srcs/ | grep Error
+	-@cat $(SFILES) | grep "//"
 
 .PHONY: clean re fclean force all norm
