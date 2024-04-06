@@ -6,22 +6,31 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 04:44:12 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/04 01:24:31 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/06 02:40:26 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
-#include "list.h"
+#include <stddef.h>
 
-typedef struct s_env
+typedef struct s_env	t_env;
+
+struct s_env
 {
-	char	*tok;
+	char	*key;
+	char	*value;
 	t_env	*left;
 	t_env	*right;
-}	t_env;
+};
 
-
+void	ms_env_init(char *key, char *value, t_env *env);
+t_env	*ms_env_new(char *key, char *value);
+int		ms_env_add(t_env **head, t_env *e);
+char	*ms_env_get(t_env *env, char *key);
+void	ms_env_remove(t_env	**head, char *key);
+void	ms_env_collapse(t_env **head);
+int		ms_env_gen(char **strs, t_env **env);
 
 #endif

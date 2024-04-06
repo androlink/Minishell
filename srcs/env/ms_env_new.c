@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_collapse.c                                  :+:      :+:    :+:   */
+/*   ms_env_new.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 03:18:21 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/06 00:41:59 by gcros            ###   ########.fr       */
+/*   Created: 2024/04/04 20:20:52 by gcros             #+#    #+#             */
+/*   Updated: 2024/04/04 23:01:29 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 #include <stdlib.h>
 
 /**
- * @brief destroy the actual env tree and the leafs
+ * @brief create new t_env
  * 
- * @param head the top of the tree
+ * @param key string used as key 
+ * @param value string used as stored value
+ * @return  a malloc t_env or NULL if failed
  */
-void	ms_env_collapse(t_env **head)
+t_env	*ms_env_new(char *key, char *value)
 {
-	if (*head == NULL)
-		return ;
-	free((*head)->key);
-	free((*head)->value);
-	ms_env_collapse(&(*head)->left);
-	ms_env_collapse(&(*head)->right);
-	free(*head);
-	*head = NULL;
+	t_env	*env;
+
+	env = malloc(sizeof(t_env));
+	if (env != NULL)
+		ms_env_init(key, value, env);
+	return (env);
 }
