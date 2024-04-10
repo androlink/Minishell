@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 03:00:26 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/10 05:30:07 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 19:57:24 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	set_exec(t_env **env, char *exec_cmd);
 
 /**
  * @brief complete environment with \
- * @brief PWD if not set \
- * @brief SHLVL if not set else increment \
+ * @brief PWD set to actual CWD \
+ * @brief OLDPWD set to NULL if not set \
  * @brief _
  * 
  * @param env 
@@ -28,10 +28,13 @@ static int	set_exec(t_env **env, char *exec_cmd);
  */
 int	ms_env_complete(t_env **env, char *exec_cmd)
 {
-	if (ms_env_get(*env, "PWD") == NULL)
-		if (set_pwd(env) == 1)
-			return (1);
+	t_env	*tmp;
+
+	if (set_pwd(env) == 1)
+		return (1);
 	if (set_exec(env, exec_cmd) == 1)
+		return (1);
+	if (ms_parse_env_node("OLDPWD", &tmp) == 1 || ms_env_add(env, tmp) == 1)
 		return (1);
 	return (0);
 }

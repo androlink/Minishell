@@ -6,14 +6,13 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:15:41 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/10 05:32:46 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 19:32:03 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "str.h"
 
-int			parse_env_node(char *str, t_env **out);
 static int	get_key(char *str, char **out);
 static int	get_value(char *str, char **out);
 
@@ -32,7 +31,7 @@ int	ms_env_gen(char **strs, t_env **env)
 	p = strs;
 	while (*p != NULL)
 	{
-		if (parse_env_node(*p, &tmp) == 1)
+		if (ms_parse_env_node(*p, &tmp) == 1)
 			break ;
 		ms_env_add(env, tmp);
 		p++;
@@ -50,13 +49,15 @@ int	ms_env_gen(char **strs, t_env **env)
  * @param out the out node 
  * @return int the error output (0: ok, 1: error)
  */
-int	parse_env_node(char *str, t_env **out)
+int	ms_parse_env_node(char *str, t_env **out)
 {
 	char	*s1;
 	char	*s2;
 	t_env	*e;
 
-	if (get_key(str, &s1) == 1 || get_value(str, &s2) == 1)
+	s1 = NULL;
+	s2 = NULL;
+	if (*str == '=' || get_key(str, &s1) == 1 || get_value(str, &s2) == 1)
 	{
 		free(s1);
 		free(s2);
