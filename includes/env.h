@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 04:44:12 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/06 02:40:26 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 04:37:51 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ char	*ms_env_get(t_env *env, char *key);
 void	ms_env_remove(t_env	**head, char *key);
 void	ms_env_collapse(t_env **head);
 int		ms_env_gen(char **strs, t_env **env);
+int		ms_env_to_strs(t_env *env, char ***out);
+int		ms_env_complete(t_env **env, char *exec_cmd);
 
 #endif

@@ -11,3 +11,4 @@ SRCS += env/ms_env_remove.c
 SRCS += env/ms_env_to_strs.c
 SRCS += env/ms_env_get.c
 SRCS += env/ms_env_gen.c
+SRCS += env/ms_env_complete.c

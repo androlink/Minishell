@@ -6,13 +6,20 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 23:35:55 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/06 01:40:55 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 05:36:15 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "str.h"
 
+/**
+ * @brief search and return the value of a key
+ * 
+ * @param env the env tree
+ * @param key the key to search
+ * @return the value NULL if not set nor found
+ */
 char	*ms_env_get(t_env *env, char *key)
 {
 	int	cmp;

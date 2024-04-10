@@ -6,17 +6,24 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 00:15:41 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/06 02:41:54 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/10 05:32:46 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "str.h"
 
-int	get_node(char *str, t_env **out);
-int	get_key(char *str, char **out);
-int	get_value(char *str, char **out);
+int			parse_env_node(char *str, t_env **out);
+static int	get_key(char *str, char **out);
+static int	get_value(char *str, char **out);
 
+/**
+ * @brief generate env tree from a char** NULL terminated type
+ * 
+ * @param strs the char** source
+ * @param env the out tree
+ * @return int the error output (0: ok, 1: error)
+ */
 int	ms_env_gen(char **strs, t_env **env)
 {
 	char	**p;
@@ -25,18 +32,25 @@ int	ms_env_gen(char **strs, t_env **env)
 	p = strs;
 	while (*p != NULL)
 	{
-		if (get_node(*p, &tmp) == 1)
-			break;
+		if (parse_env_node(*p, &tmp) == 1)
+			break ;
 		ms_env_add(env, tmp);
 		p++;
 	}
 	if (*p == NULL)
 		return (0);
 	ms_env_collapse(env);
-	return (0);
+	return (1);
 }
 
-int	get_node(char *str, t_env **out)
+/**
+ * @brief parse the node form a string
+ * 
+ * @param str the source string
+ * @param out the out node 
+ * @return int the error output (0: ok, 1: error)
+ */
+int	parse_env_node(char *str, t_env **out)
 {
 	char	*s1;
 	char	*s2;
@@ -58,11 +72,18 @@ int	get_node(char *str, t_env **out)
 	return (e == NULL);
 }
 
-int	get_key(char *str, char **out)
+/**
+ * @brief parse the key form a string
+ * 
+ * @param str the source string
+ * @param out the out string
+ * @return int the error output (0: ok, 1: error)
+ */
+static int	get_key(char *str, char **out)
 {
 	char	*tmp;
 	size_t	i;
-	
+
 	tmp = ft_strchr(str, '=');
 	if (tmp == NULL)
 		return ((*out = ft_strdup(str)) == NULL);
@@ -74,11 +95,18 @@ int	get_key(char *str, char **out)
 	return (*out == NULL);
 }
 
-int	get_value(char *str, char **out)
+/**
+ * @brief parse the value form a string
+ * 
+ * @param str the source string
+ * @param out the out string
+ * @return int the error output (0: ok, 1: error)
+ */
+static int	get_value(char *str, char **out)
 {
 	str = ft_strchr(str, '=');
 	if (str == NULL)
-		return ((*out = NULL) || 1);
+		return ((*out = NULL) && 0);
 	str += *str == '=';
 	return ((*out = ft_strdup(str)) == NULL);
 }
