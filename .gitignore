@@ -1,3 +1,6 @@
 .vscode/
 .build/
 minishell
+compile_commands.json
+test/
+srcs/main.c
