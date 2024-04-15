@@ -6,11 +6,12 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:17:43 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/10 19:21:42 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/15 22:37:25 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "str.h"
 
 /**
  * @brief check if a value exist
@@ -29,8 +30,8 @@ int	ms_env_exist(t_env *env, char *key)
 	if (cmp == 0)
 		return (1);
 	else if (cmp < 0)
-		return (ms_env_get(env->right, key));
+		return (ms_env_exist(env->right, key));
 	else
-		return (ms_env_get(env->left, key));
+		return (ms_env_exist(env->left, key));
 	return (0);
 }
