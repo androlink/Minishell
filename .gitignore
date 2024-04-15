@@ -3,4 +3,4 @@
 minishell
 compile_commands.json
 test/
-main.c
+srcs/main.c
