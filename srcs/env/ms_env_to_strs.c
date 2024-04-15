@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:18:27 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/10 18:16:38 by gcros            ###   ########.fr       */
+/*   Updated: 2024/04/15 19:57:52 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "arr.h"
 #include "str.h"
 
-int	ms_get_strs(t_env *env, t_array *arr);
+static int	ms_get_strs(t_env *env, t_array *arr);
 
 int	ms_env_to_strs(t_env *env, char ***out)
 {
@@ -33,7 +33,7 @@ int	ms_env_to_strs(t_env *env, char ***out)
 	return (0);
 }
 
-int	ms_get_strs(t_env *env, t_array *arr)
+static int	ms_get_strs(t_env *env, t_array *arr)
 {
 	char	*str;
 
