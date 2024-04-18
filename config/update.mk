@@ -1,6 +1,7 @@
-U_DIR := env \
-			exec
+U_DIR := env
 OUT = ./out.mk
+
+$(touch $(OUT))
 
 list_files = $($(cat) $(dir))
 
