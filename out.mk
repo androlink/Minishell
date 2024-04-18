@@ -13,4 +13,6 @@ SRCS += env/ms_env_init.c
 SRCS += env/ms_env_remove.c
 SRCS += env/ms_env_add.c
 #---exec---
-SRCS += exec/ms_find_binary.c
+SRCS += exec/ms_exec_acces.c
+SRCS += exec/ms_exec_cmd_path.c
+SRCS += exec/ms_exec_name.c
