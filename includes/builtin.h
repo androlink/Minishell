@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 04:37:28 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/24 05:08:05 by gcros            ###   ########.fr       */
+/*   Created: 2024/04/23 20:53:13 by gcros             #+#    #+#             */
+/*   Updated: 2024/04/24 05:06:15 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef BUILTIN_H
+# define BUILTIN_H
+
 #include "env.h"
-#include "str.h"
-#include "ft_printf.h"
-//#include <readline/readline.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "builtin.h"
 
-int	main(int ac, char **av, char **env)
-{
-	t_env	*envp;
+int	cd(int ac, char **args, t_env **env);
+int	echo(char **args);
+int	pwd(int ac, char **av);
 
-	(void) ac;
-	(void) av;
-	(void) env;
-	envp = NULL;
-	ms_env_gen(env, &envp);
-	cd(ac, av, &envp);
-	pwd(ac, av);
-	ms_env_collapse(&envp);
-	return (0);
-}
+#endif
