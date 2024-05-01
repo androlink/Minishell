@@ -6,7 +6,7 @@
 /*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 04:44:12 by gcros             #+#    #+#             */
-/*   Updated: 2024/04/23 22:34:18 by gcros            ###   ########.fr       */
+/*   Updated: 2024/05/01 03:33:21 by gcros            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ int		ms_parse_env_node(char *str, t_env **out);
 int		ms_env_to_strs(t_env *env, char ***out);
 int		ms_env_complete(t_env **env, char *exec_cmd);
 int		ms_env_append(t_env **env, char *key, char *value);
+int		ms_parse_env_node(char *str, t_env **out);
+int		get_key(char *str, char **out);
 
 #endif
