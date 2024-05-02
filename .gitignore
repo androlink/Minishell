@@ -3,3 +3,13 @@
 minishell
 compile_commands.json
 test/
+.clang-format
+|
+$t
+a
+b
+cat
+env
+ls
+o a
+out
