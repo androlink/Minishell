@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcros <gcros@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmorot <mmorot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:30:04 by mmorot            #+#    #+#             */
-/*   Updated: 2024/06/06 21:10:57 by gcros            ###   ########.fr       */
+/*   Updated: 2024/06/07 18:27:25 by mmorot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	run_append(t_exec *exec_cmd, char **word, char **tmp_str)
 	return (0);
 }
 
-char	*fj(char *s1, char *s2)
+static char	*fj(char *s1, char *s2)
 {
 	char	*t;
 

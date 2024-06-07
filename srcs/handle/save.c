@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_handle_join.c                                   :+:      :+:    :+:   */
+/*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmorot <mmorot@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:53:53 by mmorot            #+#    #+#             */
-/*   Updated: 2024/06/07 18:40:26 by mmorot           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:00:39 by mmorot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,16 +293,6 @@ static int add_exec_heredoc(t_exec *exec, t_command *command)
 	return (0);
 }
 
-static char	*fj(char *s1, char *s2)
-{
-	char	*t;
-
-	t = s1;
-	s1 = ft_strjoin(s1, s2);
-	free(t);
-	return (s1);
-}
-
 static char *command_get_path(t_array *array, size_t *i, t_shell *shell)
 {
 	t_command	*command;
@@ -380,33 +370,7 @@ static int	command_get_redir(t_array *array, t_exec *exec_cmd, t_shell *shell)
 	return (0);
 }
 //new
-
-static t_command_type get_last_type(t_array *array, size_t *i)
-{
-	if (*i > 0)
-		return (((t_command *)array->data[*i - 1])->type);
-	return (CMD_EMPTY);
-}
-
-static char	*get_exp(char *str, t_env *env)
-{
-	char	*nstr;
-
-	if (ft_strncmp(str, "?", 2) == 0)
-	{
-		nstr = ft_itoa(ms_get_status());
-	}
-	else
-	{
-		nstr = ms_env_get(env, str);
-		if (nstr == NULL)
-			return (NULL);
-		nstr = ft_strdup(nstr);
-	}
-	return (nstr);
-}
-//new
-int	run_join(t_array *array, t_exec *exec_cmd,
+static int	run_join(t_array *array, t_exec *exec_cmd,
 	t_shell *shell, char **word)
 {
 	size_t		i;
@@ -428,147 +392,6 @@ int	run_join(t_array *array, t_exec *exec_cmd,
 			commit_word(exec_cmd, word);
 		i++;
 	}	
-	return (0);
-}
-
-int	new_join(t_array *array, t_exec *exec_cmd,
-	t_shell *shell, char **word)
-{
-
-	(void)exec_cmd;
-	(void)word;
-	t_array		*new_array;
-	new_array = ft_arr_new(20);
-	if (new_array == NULL)
-	{
-		shell->error = 1;
-		shell->prompt_listen = 0;
-		return (1);
-	}
-	size_t		i;
-	char *temp;
-	t_command	*command;
-
-	i = 0;
-	
-	printf("IN new_join\n");
-	// command_get_redir(array, exec_cmd, shell);
-	while (i < array->size && shell->error < 1)
-	{
-		printf("IN new_join while\n");
-		command = (t_command *)array->data[i];
-		if (command->type == CMD_TEXT)
-		{
-			printf("IN new_join CMD_TEXT\n");
-			if (get_last_type(array, &i) == CMD_TEXT)
-			{
-				temp = (command-1)->content.str;
-				(command-1)->content.str = ft_strjoin(temp, command->content.str);
-				free(temp);
-				//check null
-			}
-			else
-			{
-				if (get_last_type(array, &i) == CMD_TEXT)
-				{
-					t_command *new_command;
-					new_command = malloc(sizeof(t_command));
-					new_command->type = CMD_EMPTY;
-					ft_arr_append(new_array, new_command);
-				}
-				t_command *new_command;
-				new_command = malloc(sizeof(t_command));
-				new_command->type = CMD_TEXT;
-				new_command->content.str = ft_strdup(command->content.str);
-				ft_arr_append(new_array, command);
-			}
-		}
-		else if (command->type == CMD_EXPAND_QUOTE)
-		{
-			if (command->content.str[0] == '\0')
-			{
-				if (get_last_type(array, &i) == CMD_TEXT)
-				{
-					temp = (command-1)->content.str;
-					(command-1)->content.str = ft_strjoin(temp, "$");
-					free(temp);
-					//check null
-				}
-				else
-				{
-					t_command *new_command;
-					new_command = malloc(sizeof(t_command));
-					new_command->type = CMD_TEXT;
-					new_command->content.str = ft_strdup("$");
-					ft_arr_append(new_array, command);
-				}
-			}
-			else
-			{
-				t_command *new_command;
-				new_command = malloc(sizeof(t_command));
-				char *env_str = get_exp(command->content.str, shell->env);
-				new_command->type = CMD_TEXT;
-				new_command->content.str = env_str;
-				ft_arr_append(new_array, command);
-			}
-		}
-		else if (command->type == CMD_EXPAND)
-		{
-			if (command->content.str[0] == '\0')
-			{
-				if (get_last_type(array, &i) == CMD_TEXT)
-				{
-					temp = (command-1)->content.str;
-					(command-1)->content.str = ft_strjoin(temp, "$");
-					free(temp);
-					//check null
-				}
-				else
-				{
-					t_command *new_command;
-					new_command = malloc(sizeof(t_command));
-					new_command->type = CMD_TEXT;
-					new_command->content.str = ft_strdup("$");
-					ft_arr_append(new_array, command);
-				}
-			}
-			else
-			{
-				char *env_str = get_exp(command->content.str, shell->env);
-				if (env_str != NULL && env_str[0])
-				{
-					char **tmp_str = ft_split_chars(env_str, " \t\n");
-					char **tmp_tmp_str = tmp_str;
-					if (*tmp_str != NULL && !ft_include(" \t\n", env_str[0]))
-					{
-						if (get_last_type(array, &i) == CMD_TEXT)
-						{
-							(command-1)->content.str = fj((command-1)->content.str, *tmp_str);
-							tmp_str++;
-						}
-						while (*tmp_str != NULL)
-						{
-							t_command *new_command;
-							new_command = malloc(sizeof(t_command));
-							new_command->type = CMD_TEXT;
-							new_command->content.str = ft_strdup(*tmp_str);
-							ft_arr_append(new_array, new_command);
-							tmp_str++;
-						}
-						(void)tmp_tmp_str;
-						(void)tmp_str;
-					}
-				}
-			}
-		}
-		else
-		{
-			ft_arr_append(new_array, command);
-		}
-		i++;
-	}
-	ms_debug_command_to_json_exec(0, new_array);
 	return (0);
 }
 
@@ -606,8 +429,7 @@ int	ms_handle_join(t_array *array, t_shell *shell, int fd[2])
 	word = NULL;
 	if (add_exec(&exec_cmd, shell) == 0 || exec_cmd == NULL)
 		return (0);
-	new_join(array, exec_cmd, shell, &word);
-	// run_join(array, exec_cmd, shell, &word);
+	run_join(array, exec_cmd, shell, &word);
 	if (exec_cmd->fd[0] == -1)
 		exec_cmd->fd[0] = fd[0];
 	if (exec_cmd->fd[1] == -1)
